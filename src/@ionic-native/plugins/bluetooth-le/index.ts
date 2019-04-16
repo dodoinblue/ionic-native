@@ -310,7 +310,7 @@ export interface OperationResult extends DeviceInfo {
   /** Service's UUID */
   service: string;
   /** Base64 encoded string of bytes */
-  value: string;
+  value?: string;
 }
 
 export interface UnsubscribeResult extends DeviceInfo {
@@ -517,7 +517,7 @@ export class BluetoothLE extends IonicNativePlugin {
    * Bond with a device.
    * The device doesn't need to be connected to initiate bonding. Android support only.
    * @param {{ address: string }} params The address/identifier provided by the scan's return object
-   * @returns {(Observable<{ status: DeviceInfo }>)}
+   * @returns {(Observable<DeviceInfo>)}
    * success:
    *    The first success callback should always return with status == bonding.
    *    If the bond is created, the callback will return again with status == bonded.
@@ -526,7 +526,7 @@ export class BluetoothLE extends IonicNativePlugin {
    *    The callback that will be triggered when the bond operation fails
    */
   @Cordova({ callbackOrder: 'reverse', observable: true })
-  bond(params: { address: string }): Observable<{ status: DeviceInfo }> {
+  bond(params: { address: string }): Observable<DeviceInfo> {
     return;
   }
 
@@ -534,12 +534,12 @@ export class BluetoothLE extends IonicNativePlugin {
    * @name unbond (Android)
    * Unbond with a device. The device doesn't need to be connected to initiate bonding. Android support only.
    * @param {{address: string}} params The address/identifier
-   * @returns {Promise<{ status: DeviceInfo }>}
+   * @returns {Promise<DeviceInfo>}
    *    success: The success callback should always return with status == unbonded, that is passed with device object
    *    error: The callback that will be triggered when the unbond operation fails
    */
   @Cordova({ callbackOrder: 'reverse' })
-  unbond(params: { address: string }): Promise<{ status: DeviceInfo }> {
+  unbond(params: { address: string }): Promise<DeviceInfo> {
     return;
   }
 
@@ -551,7 +551,7 @@ export class BluetoothLE extends IonicNativePlugin {
    * @param params         The address/identifier
    *
    * @param {{address: string, autoConnect: boolean}} params
-   * @returns {(Observable<{ status: DeviceInfo }>)}
+   * @returns {(Observable<DeviceInfo>)}
    *    success: device object with status
    *    error: The callback that will be triggered when the unbond operation fails
    */
@@ -567,10 +567,10 @@ export class BluetoothLE extends IonicNativePlugin {
    * @name reconnect
    * Reconnect to a previously connected Bluetooth device
    * @param {{address: string}} params The address/identifier
-   * @returns {(Observable<{ status: DeviceInfo }>)}
+   * @returns {(Observable<DeviceInfo>)}
    */
   @Cordova({ callbackOrder: 'reverse', observable: true })
-  reconnect(params: { address: string }): Observable<{ status: DeviceInfo }> {
+  reconnect(params: { address: string }): Observable<DeviceInfo> {
     return;
   }
 
@@ -641,12 +641,12 @@ export class BluetoothLE extends IonicNativePlugin {
    * Discover the service's characteristics.
    * Not providing an array of characteristics will return all characteristics and take longer to discover. iOS support only.
    * @param {CharacteristicParams} params Characteristic params
-   * @returns {Promise<{ characteristics: Characteristics }>} The service id and an Array of characteristics
+   * @returns {Characteristics>} The service id and an Array of characteristics
    */
   @Cordova({ callbackOrder: 'reverse' })
   characteristics(
     params: CharacteristicParams
-  ): Promise<{ characteristics: Characteristics }> {
+  ): Promise<Characteristics> {
     return;
   }
 
@@ -654,10 +654,10 @@ export class BluetoothLE extends IonicNativePlugin {
    * @name descriptors (iOS)
    * Discover the characteristic's descriptors. iOS support only.
    * @param {DescriptorParams} params
-   * @returns {Promise<{ descriptors: Descriptors }>}
+   * @returns {Promise<Descriptors>}
    */
   @Cordova({ callbackOrder: 'reverse' })
-  descriptors(params: DescriptorParams): Promise<{ descriptors: Descriptors }> {
+  descriptors(params: DescriptorParams): Promise<Descriptors> {
     return;
   }
 
